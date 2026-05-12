@@ -2,19 +2,24 @@
 export type HeroSlide = {
   src: string;
   alt: string;
+  /** Короткая подпись к кадру (лента поверх фото). */
+  caption?: string;
 };
 
 export const HERO_SLIDES: readonly HeroSlide[] = [
   {
     src: "/images/hero/hero-slide-01.jpg",
     alt: "Всадники на фоне камчатских просторов",
+    caption: "Просторы и сопки",
   },
   {
     src: "/images/hero/hero-slide-02.jpg",
     alt: "Конная прогулка по тропам полуострова",
+    caption: "Лесные тропы",
   },
   {
     src: "/images/hero/hero-slide-03.jpg",
     alt: "Лошади и природа Камчатки",
+    caption: "Реки и озёра",
   },
 ];

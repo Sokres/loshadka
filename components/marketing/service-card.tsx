@@ -38,19 +38,15 @@ export function ServiceCard({
   const coverSrc = galleryPaths?.[0];
   const extraCount = galleryPaths && galleryPaths.length > 1 ? galleryPaths.length - 1 : 0;
 
-  return (
-    <Link
-      href={href}
+  const cardInner = (
+    <Card
       className={cn(
-        "group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-0 shadow-sm transition-all duration-300",
+        "hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/8",
+        featured &&
+          "rounded-[15px] border-0 shadow-md ring-0 sm:rounded-[15px] hover:shadow-xl hover:shadow-primary/14",
       )}
     >
-      <Card
-        className={cn(
-          "h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-0 shadow-sm transition-all duration-300",
-          "hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/8",
-        )}
-      >
         {coverSrc ? (
           <div
             className={cn(
@@ -105,6 +101,22 @@ export function ServiceCard({
           ) : null}
         </CardContent>
       </Card>
+  );
+
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      )}
+    >
+      {featured ? (
+        <div className="rounded-2xl bg-linear-to-br from-primary/58 via-accent/48 to-primary/42 p-px shadow-md shadow-primary/14 transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-primary/22">
+          {cardInner}
+        </div>
+      ) : (
+        cardInner
+      )}
     </Link>
   );
 }

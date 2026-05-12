@@ -1,12 +1,17 @@
 "use client";
 
 import Script from "next/script";
-import { useId } from "react";
 
 import { YANDEX_CONSTRUCTOR_UM } from "@/lib/marketing/yandex-constructor";
 import { cn } from "@/lib/utils";
 
 type Props = {
+  /**
+   * Стабильный уникальный id DOM-контейнера на странице.
+   * Не используйте `useId()` — при Strict Mode в dev получаются разные URL скрипта
+   * и виджет может загрузиться дважды (второй блок часто «улетает» в конец документа).
+   */
+  containerId: string;
   className?: string;
   /** Как в коде конструктора (виджет задаёт высоту области карты). */
   heightPx?: number;
@@ -26,11 +31,11 @@ function buildConstructorScriptSrc(containerId: string, heightPx: number): strin
 }
 
 export function YandexConstructorMap({
+  containerId,
   className,
   heightPx = 400,
   strategy = "lazyOnload",
 }: Props) {
-  const containerId = `ym-${useId().replace(/:/g, "")}`;
   const scriptSrc = buildConstructorScriptSrc(containerId, heightPx);
 
   return (

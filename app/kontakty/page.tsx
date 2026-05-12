@@ -58,7 +58,7 @@ export default async function ContactsPage() {
           Интерактивная схема от Яндекс.Карт — можно приблизить и посмотреть окрестности.
         </p>
         <div className="mt-6">
-          <YandexConstructorMap strategy="afterInteractive" />
+          <YandexConstructorMap containerId="ym-kontakty-map" strategy="afterInteractive" />
         </div>
       </section>
     </main>

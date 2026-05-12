@@ -3,6 +3,10 @@ import Link from "next/link";
 import { MapPin, MessageCircle, Shield } from "lucide-react";
 
 import { Hero } from "@/components/marketing/hero";
+import { HomeReviewsSection } from "@/components/marketing/home-reviews-section";
+import { LocationsMarquee } from "@/components/marketing/locations-marquee";
+import { ScrollReveal } from "@/components/marketing/scroll-reveal";
+import { SectionWave } from "@/components/marketing/section-wave";
 import { YandexConstructorMap } from "@/components/map/yandex-constructor-map";
 
 import { SectionIntro } from "@/components/marketing/section-intro";
@@ -67,15 +71,19 @@ export default async function HomePage() {
         slides={HERO_SLIDES}
       />
 
+      <SectionWave />
+
       <section className="bg-background px-4 py-20 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-6xl">
-          <SectionIntro
-            align="start"
-            eyebrow="Куда поедем"
-            title="Направления"
-            description="Выберите формат отдыха — от короткой прогулки до многодневного похода."
-            className="max-w-xl"
-          />
+          <ScrollReveal>
+            <SectionIntro
+              align="start"
+              eyebrow="Куда поедем"
+              title="Направления"
+              description="Выберите формат отдыха — от короткой прогулки до многодневного похода."
+              className="max-w-xl"
+            />
+          </ScrollReveal>
           <div
             className={cn(
               "mt-10 grid gap-6",
@@ -83,7 +91,11 @@ export default async function HomePage() {
             )}
           >
             {categories.map((c, idx) => (
-              <div key={c._id} className={cn(useBento && directionsGridItemClass(idx))}>
+              <ScrollReveal
+                key={c._id}
+                delayMs={Math.min(idx, 5) * 55}
+                className={cn(useBento && directionsGridItemClass(idx))}
+              >
                 <ServiceCard
                   href={`/${c.slug.current}`}
                   title={c.title}
@@ -91,13 +103,14 @@ export default async function HomePage() {
                   galleryPaths={categoryHomeCoverPaths(c.slug.current)}
                   variant={useBento && idx === 0 ? "featured" : "default"}
                 />
-              </div>
+              </ScrollReveal>
             ))}
             {standalones.map((s, j) => {
               const idx = categories.length + j;
               return (
-                <div
+                <ScrollReveal
                   key={s._id}
+                  delayMs={Math.min(idx, 5) * 55}
                   className={cn(useBento && directionsGridItemClass(idx))}
                 >
                   <ServiceCard
@@ -106,7 +119,7 @@ export default async function HomePage() {
                     excerpt={s.excerpt}
                     variant={useBento && idx === 0 ? "featured" : "default"}
                   />
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -114,7 +127,7 @@ export default async function HomePage() {
       </section>
 
       <section className="border-y border-border/60 bg-muted/35 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-6xl">
+        <ScrollReveal className="mx-auto max-w-6xl">
           <SectionIntro
             align="start"
             eyebrow="О нас"
@@ -124,80 +137,67 @@ export default async function HomePage() {
           />
 
           <div className="mt-12 grid gap-6 lg:grid-cols-12 lg:gap-8">
-            <Card className="flex flex-col justify-between gap-6 rounded-3xl border-border/70 bg-card/90 p-1 shadow-sm transition-shadow hover:shadow-md lg:col-span-7 lg:row-span-2 lg:min-h-80">
-              <CardHeader className="gap-5 p-6 sm:p-8">
-                <span className="flex size-14 items-center justify-center rounded-2xl bg-primary/12 text-primary">
-                  <Shield className="size-7" aria-hidden />
-                </span>
-                <CardTitle className="text-2xl font-semibold tracking-tight">Безопасность</CardTitle>
-                <CardDescription className="text-base leading-relaxed md:text-[17px]">
-                  Спокойные лошади для новичков и понятные инструкции перед выездом — без давления и спешки.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="rounded-3xl border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md lg:col-span-5 lg:col-start-8 lg:row-start-1">
-              <CardHeader className="gap-4 p-6 sm:p-7">
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/12 text-primary">
-                  <MapPin className="size-6" aria-hidden />
-                </span>
-                <CardTitle className="text-xl">Маршруты Камчатки</CardTitle>
-                <CardDescription className="text-base leading-relaxed">
-                  От берега Авачи до океана и горячих источников — соберём программу под сезон и вашу
-                  подготовку.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="rounded-3xl border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md lg:col-span-5 lg:col-start-8 lg:row-start-2">
-              <CardHeader className="gap-4 p-6 sm:p-7">
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/12 text-primary">
-                  <MessageCircle className="size-6" aria-hidden />
-                </span>
-                <CardTitle className="text-xl">Живой контакт</CardTitle>
-                <CardDescription className="text-base leading-relaxed">
-                  Запись в WhatsApp или звонок — ответим по датам и маршрутам без длинных форм и ожидания.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-muted/25 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-6xl">
-          <SectionIntro
-            eyebrow="Слово тем, кто уже был с нами"
-            title="Отзывы гостей"
-            align="center"
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {reviews.map((r) => (
-              <Card
-                key={r._id}
-                className="rounded-2xl border-border/70 bg-background/95 shadow-sm ring-1 ring-border/55"
-              >
-                <CardHeader className="gap-3">
-                  <CardTitle className="text-base font-semibold">{r.authorName}</CardTitle>
-                  <CardDescription className="relative pl-5 text-base leading-relaxed text-foreground/90">
-                    <span
-                      className="absolute left-0 top-0 translate-y-[-2px] text-4xl leading-none font-heading text-primary/35 selection:bg-transparent"
-                      aria-hidden
-                    >
-                      «
-                    </span>
-                    <span>{r.quote}</span>
-                    <span aria-hidden className="text-foreground/55">
-                      »
-                    </span>
+            <ScrollReveal delayMs={0} className="lg:col-span-7 lg:row-span-2 lg:min-h-80">
+              <Card className="flex h-full flex-col justify-between gap-6 rounded-3xl border-border/70 bg-card/90 p-1 shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="gap-5 p-6 sm:p-8">
+                  <span className="flex size-14 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+                    <Shield className="size-7" aria-hidden />
+                  </span>
+                  <CardTitle className="text-2xl font-semibold tracking-tight">Безопасность</CardTitle>
+                  <CardDescription className="text-base leading-relaxed md:text-[17px]">
+                    Спокойные лошади для новичков и понятные инструкции перед выездом — без давления и спешки.
                   </CardDescription>
                 </CardHeader>
               </Card>
-            ))}
+            </ScrollReveal>
+            <ScrollReveal delayMs={90} className="lg:col-span-5 lg:col-start-8 lg:row-start-1">
+              <Card className="rounded-3xl border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="gap-4 p-6 sm:p-7">
+                  <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+                    <MapPin className="size-6" aria-hidden />
+                  </span>
+                  <CardTitle className="text-xl">Маршруты Камчатки</CardTitle>
+                  <CardDescription className="text-base leading-relaxed">
+                    От берега Авачи до океана и горячих источников — соберём программу под сезон и вашу
+                    подготовку.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </ScrollReveal>
+            <ScrollReveal delayMs={180} className="lg:col-span-5 lg:col-start-8 lg:row-start-2">
+              <Card className="rounded-3xl border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md">
+                <CardHeader className="gap-4 p-6 sm:p-7">
+                  <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+                    <MessageCircle className="size-6" aria-hidden />
+                  </span>
+                  <CardTitle className="text-xl">Живой контакт</CardTitle>
+                  <CardDescription className="text-base leading-relaxed">
+                    Запись в WhatsApp или звонок — ответим по датам и маршрутам без длинных форм и ожидания.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </ScrollReveal>
           </div>
+        </ScrollReveal>
+      </section>
+
+      <LocationsMarquee />
+
+      <section className="bg-muted/25 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <ScrollReveal>
+            <SectionIntro
+              eyebrow="Слово тем, кто уже был с нами"
+              title="Отзывы гостей"
+              align="center"
+            />
+          </ScrollReveal>
+          <HomeReviewsSection reviews={reviews} />
         </div>
       </section>
 
       <section className="border-y border-border/50 bg-background px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-6xl">
+        <ScrollReveal className="mx-auto max-w-6xl">
           <SectionIntro
             align="center"
             eyebrow="Сбор и ориентиры"
@@ -205,13 +205,13 @@ export default async function HomePage() {
             description="Точку встречи и проезд уточняйте при записи — на карте общий ориентир."
           />
           <div className="mt-10">
-            <YandexConstructorMap strategy="lazyOnload" />
+            <YandexConstructorMap containerId="ym-home-how-to-get" strategy="lazyOnload" />
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="border-t border-border/60 bg-linear-to-b from-muted/45 via-muted/25 to-background px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-3xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
             Готовы к приключению?
           </h2>
@@ -235,7 +235,7 @@ export default async function HomePage() {
               Контакты и как добраться
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
     </>
   );
