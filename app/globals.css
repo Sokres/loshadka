@@ -53,24 +53,25 @@
 }
 
 :root {
-  --background: oklch(0.992 0.006 95);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(0.997 0.004 95);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(0.997 0.004 95);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.42 0.1 155);
-  --primary-foreground: oklch(0.985 0.02 155);
-  --secondary: oklch(0.965 0.012 145);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.956 0.016 150);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.958 0.02 150);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Светлая тема: тёплый акцент (терракота ~ тренды nature/warm joyful 25–26), не «офисный» зелёный. */
+  --background: oklch(0.994 0.008 92);
+  --foreground: oklch(0.18 0.02 50);
+  --card: oklch(0.998 0.006 95);
+  --card-foreground: oklch(0.18 0.02 50);
+  --popover: oklch(0.998 0.006 95);
+  --popover-foreground: oklch(0.18 0.02 50);
+  --primary: oklch(0.5 0.14 43);
+  --primary-foreground: oklch(0.99 0.01 95);
+  --secondary: oklch(0.965 0.028 100);
+  --secondary-foreground: oklch(0.26 0.04 50);
+  --muted: oklch(0.957 0.024 105);
+  --muted-foreground: oklch(0.52 0.03 70);
+  --accent: oklch(0.945 0.045 118);
+  --accent-foreground: oklch(0.22 0.05 50);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.905 0.014 125);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.9 0.03 82);
+  --input: oklch(0.925 0.02 90);
+  --ring: oklch(0.58 0.11 43);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -88,24 +89,24 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.165 0.018 55);
+  --foreground: oklch(0.97 0.012 95);
+  --card: oklch(0.215 0.022 58);
+  --card-foreground: oklch(0.97 0.012 95);
+  --popover: oklch(0.215 0.022 58);
+  --popover-foreground: oklch(0.97 0.012 95);
+  --primary: oklch(0.72 0.14 52);
+  --primary-foreground: oklch(0.2 0.04 45);
+  --secondary: oklch(0.29 0.03 95);
+  --secondary-foreground: oklch(0.97 0.012 95);
+  --muted: oklch(0.28 0.025 95);
+  --muted-foreground: oklch(0.72 0.03 82);
+  --accent: oklch(0.34 0.05 118);
+  --accent-foreground: oklch(0.97 0.02 118);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(1 0 0 / 11%);
+  --input: oklch(1 0 0 / 13%);
+  --ring: oklch(0.72 0.12 52);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -132,13 +133,13 @@
     @apply min-h-screen bg-background text-foreground antialiased;
     background-image:
       radial-gradient(
-        ellipse 110% 65% at 50% -12%,
-        oklch(0.955 0.038 138 / 0.38),
-        transparent 52%
+        ellipse 110% 62% at 50% -10%,
+        oklch(0.965 0.07 72 / 0.45),
+        transparent 54%
       ),
       radial-gradient(
-        ellipse 85% 55% at 100% 88%,
-        oklch(0.94 0.05 165 / 0.14),
+        ellipse 90% 55% at 100% 88%,
+        oklch(0.935 0.06 132 / 0.2),
         transparent 58%
       );
     background-attachment: fixed;
@@ -146,13 +147,13 @@
   .dark body {
     background-image:
       radial-gradient(
-        ellipse 110% 65% at 50% -12%,
-        oklch(0.24 0.045 152 / 0.38),
-        transparent 52%
+        ellipse 110% 58% at 50% -8%,
+        oklch(0.38 0.08 52 / 0.35),
+        transparent 54%
       ),
       radial-gradient(
-        ellipse 85% 55% at 100% 88%,
-        oklch(0.22 0.06 165 / 0.22),
+        ellipse 88% 50% at 100% 90%,
+        oklch(0.26 0.05 138 / 0.35),
         transparent 58%
       );
   }
