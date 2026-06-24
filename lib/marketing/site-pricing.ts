@@ -1,19 +1,19 @@
 /** Контент сводной страницы цен (ориентир — общедоступные описания программ турзоны «Лошадка»). */
 
 export type RoutePriceEntry = {
-  /** Номер в списке (например «5.1»). */
   indexLabel: string;
   title: string;
   lines: readonly string[];
   priceRub: number;
-  /** Доп. текст рядом с ценой. */
   priceSuffix?: string;
   difficulty?: string;
+  difficultyLevel?: number;
+  imageSrc?: string;
   emphasis?: "accent";
 };
 
 export const PRICING_INTRO_LEAD =
-  "Конные прогулки как для новичков, так и для опытных наездников.";
+  "Конные прогулки для души, познания, тела и для опытных наездников.";
 
 export const PRICING_INTRO_ALERTS = [
   {
@@ -44,7 +44,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Чаепитие по возвращению.",
     ],
     priceRub: 2000,
-    difficulty: "🍎🍏🍏🍏🍏",
+    difficultyLevel: 1,
+    imageSrc: "/images/routes/two-hour-choice.jpg",
   },
   {
     indexLabel: "2",
@@ -55,7 +56,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Чаепитие по возвращению.",
     ],
     priceRub: 2900,
-    difficulty: "🍎🍏🍏🍏🍏",
+    difficultyLevel: 1,
+    imageSrc: "/images/routes/avacha-river-01.jpg",
   },
   {
     indexLabel: "3",
@@ -66,7 +68,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "По возвращению на базу — чаепитие.",
     ],
     priceRub: 3700,
-    difficulty: "🍎🍎🍏🍏🍏",
+    difficultyLevel: 2,
+    imageSrc: "/images/routes/avacha-river-01.jpg",
   },
   {
     indexLabel: "4",
@@ -76,7 +79,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Чаепитие по возвращению на базу.",
     ],
     priceRub: 5000,
-    difficulty: "🍎🍎🍏🍏🍏",
+    difficultyLevel: 2,
+    imageSrc: "/images/routes/two-hour-choice.jpg",
   },
   {
     indexLabel: "5.1",
@@ -86,7 +90,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "В программе: знакомство с ездовыми собаками и северными оленями, уха из лосося, чаепитие, катание на лодочке по заводьям реки Тихая (20 мин).",
     ],
     priceRub: 13500,
-    difficulty: "🍎🍎🍏🍏🍏",
+    difficultyLevel: 2,
+    imageSrc: "/images/routes/khalch-dog-kennel-01.jpg",
   },
   {
     indexLabel: "6",
@@ -96,7 +101,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "По дороге — лесное озеро и истоки реки Тихая. Ланч на маршруте.",
     ],
     priceRub: 8000,
-    difficulty: "🍎🍎🍏🍏🍏",
+    difficultyLevel: 2,
+    imageSrc: "/images/routes/khalch-dog-kennel-02.jpg",
   },
   {
     indexLabel: "7",
@@ -106,7 +112,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Протяжённость 18+18 км. Ланч. Продолжительность около 8 часов.",
     ],
     priceRub: 10000,
-    difficulty: "🍎🍎🍎🍎🍏",
+    difficultyLevel: 4,
+    imageSrc: "/images/routes/ostray-route-01.jpg",
   },
   {
     indexLabel: "8",
@@ -117,7 +124,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Протяжённость 16+16 км. Питание включено.",
     ],
     priceRub: 15000,
-    difficulty: "🍎🍎🍎🍎🍎",
+    difficultyLevel: 5,
+    imageSrc: "/images/routes/blue-lakes-01.jpg",
     emphasis: "accent",
   },
   {
@@ -130,7 +138,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Для опытных всадников. Июль–сентябрь.",
     ],
     priceRub: 47000,
-    difficulty: "🍎🍎🍎🍎🍎",
+    difficultyLevel: 5,
+    imageSrc: "/images/routes/hot-springs-01.jpg",
     emphasis: "accent",
   },
   {
@@ -141,7 +150,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Ланч включён. Около 7 часов.",
     ],
     priceRub: 8500,
-    difficulty: "🍎🍎🍏🍏🍏",
+    difficultyLevel: 2,
+    imageSrc: "/images/routes/ocean-day-01.jpeg",
   },
   {
     indexLabel: "11",
@@ -151,7 +161,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "12+12 км. Обед по-камчатски. Около 8 часов.",
     ],
     priceRub: 9500,
-    difficulty: "🍎🍎🍎🍏🍏",
+    difficultyLevel: 3,
+    imageSrc: "/images/routes/ocean-day-02.jpeg",
   },
   {
     indexLabel: "12",
@@ -162,7 +173,8 @@ export const ROUTE_PRICE_ENTRIES: readonly RoutePriceEntry[] = [
       "Около 10 часов, 13+13 км.",
     ],
     priceRub: 14500,
-    difficulty: "🍎🍎🍎🍎🍏",
+    difficultyLevel: 4,
+    imageSrc: "/images/routes/ocean-day-03.jpeg",
   },
 ];
 

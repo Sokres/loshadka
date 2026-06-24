@@ -30,6 +30,18 @@ export const review = defineType({
       validation: (Rule) => Rule.min(1).max(5),
     }),
     defineField({
+      name: "authorPhoto",
+      title: "Фото автора",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "tripPhoto",
+      title: "Фото из поездки",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "order",
       title: "Порядок на главной",
       type: "number",

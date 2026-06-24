@@ -7,7 +7,10 @@ import { getFeaturedStandaloneSlugs } from "@/lib/cms/loaders";
 import { SITE_LOGO_PNG } from "@/lib/marketing/site-assets";
 
 import { MobileNav } from "./mobile-nav";
-import { SiteHeaderDesktopNav } from "./site-header-desktop-nav";
+import {
+  SiteHeaderDesktopActions,
+  SiteHeaderDesktopNav,
+} from "./site-header-desktop-nav";
 import { buttonVariants } from "@/components/ui/button";
 import { whatsappHref } from "@/lib/contact";
 import { cn } from "@/lib/utils";
@@ -17,6 +20,10 @@ type Props = {
   tagline?: string | null;
   whatsappPhone: string;
   categories: ServiceCategoryDTO[];
+  overlay?: boolean;
+  socialVk?: string | null;
+  socialInstagram?: string | null;
+  socialTelegram?: string | null;
 };
 
 const standaloneLabels: Record<string, string> = {
@@ -27,10 +34,19 @@ const standaloneLabels: Record<string, string> = {
   sertifikat: "Сертификат",
 };
 
-export function SiteHeader({ siteTitle, tagline, whatsappPhone, categories }: Props) {
+export function SiteHeader({
+  siteTitle,
+  tagline,
+  whatsappPhone,
+  categories,
+  overlay = false,
+  socialVk,
+  socialInstagram,
+  socialTelegram,
+}: Props) {
   const waLink = whatsappHref(
     whatsappPhone,
-    "Здравствуйте! Хочу узнать про конные прогулки на Камчатке.",
+    "Здравствуйте! Хочу узнать про конные прогулки.",
   );
 
   const standaloneItems = getFeaturedStandaloneSlugs().map((slug) => ({
@@ -40,52 +56,73 @@ export function SiteHeader({ siteTitle, tagline, whatsappPhone, categories }: Pr
   }));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/45 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/72">
-      <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4 py-2 sm:px-6 md:min-h-[4.25rem] md:py-0">
-        <Link href="/" className="group flex min-w-0 items-center gap-2.5 py-1">
+    <header
+      className={cn(
+        "z-50 w-full transition-colors",
+        overlay
+          ? "absolute top-0 border-b border-white/10 bg-black/15 backdrop-blur-sm"
+          : "sticky top-0 border-b border-border/60 bg-background/95 backdrop-blur-md",
+      )}
+    >
+      <div className="mx-auto grid min-h-16 max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 py-2 sm:px-6 md:min-h-[4.25rem] md:grid-cols-[auto_1fr_auto]">
+        <Link href="/" className="group flex min-w-0 items-center py-1 md:col-start-1" aria-label={siteTitle}>
           <Image
             src={SITE_LOGO_PNG}
-            alt=""
+            alt={siteTitle}
             width={44}
             height={44}
             className="size-10 shrink-0 object-contain md:size-11"
             priority
           />
-          <div className="flex min-w-0 flex-col gap-0.5">
-            <span className="font-semibold tracking-tight text-primary transition-colors group-hover:text-primary/90">
-              {siteTitle}
-            </span>
-            {tagline ? (
-              <span className="hidden max-w-[220px] truncate text-xs text-muted-foreground sm:inline lg:max-w-[280px]">
-                {tagline}
+          {!overlay ? (
+            <div className="ml-2.5 flex min-w-0 flex-col gap-0.5">
+              <span className="font-semibold tracking-tight text-primary transition-colors group-hover:text-primary/90">
+                {siteTitle}
               </span>
-            ) : null}
-          </div>
+              {tagline ? (
+                <span className="hidden max-w-[280px] truncate text-xs text-muted-foreground lg:inline">
+                  {tagline}
+                </span>
+              ) : null}
+            </div>
+          ) : null}
         </Link>
 
         <SiteHeaderDesktopNav
           categories={categories}
           standaloneItems={standaloneItems}
           waLink={waLink}
+          overlay={overlay}
         />
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center justify-end gap-2 md:col-start-3">
+          <SiteHeaderDesktopActions waLink={waLink} overlay={overlay} />
+
+          <div className="flex items-center gap-2 md:hidden">
           <a
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(buttonVariants({ size: "sm" }), "gap-1.5 rounded-full px-3")}
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "gap-1.5 px-3",
+              overlay && "bg-white text-primary hover:bg-white/90",
+            )}
             aria-label="Написать в WhatsApp"
           >
-            <span className="hidden [@media(min-width:380px)]:inline">WhatsApp</span>
-            <span className="[@media(min-width:380px)]:hidden">WA</span>
+            WhatsApp
           </a>
           <MobileNav
             categories={categories}
             standaloneItems={standaloneItems}
             siteTitle={siteTitle}
             waLink={waLink}
+            overlay={overlay}
+            socialVk={socialVk}
+            socialInstagram={socialInstagram}
+            socialTelegram={socialTelegram}
           />
+          </div>
         </div>
       </div>
     </header>

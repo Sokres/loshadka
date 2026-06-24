@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
+import { HeaderShell } from "@/components/layout/header-shell";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { StickyContactBar } from "@/components/layout/sticky-contact";
+import { StickyContactShell } from "@/components/layout/sticky-contact-shell";
 import { LocalBusinessJsonLd } from "@/components/json-ld";
 import { loadCategories, loadSiteSettings } from "@/lib/cms/loaders";
 import { getSiteUrl } from "@/lib/site";
@@ -38,17 +38,20 @@ export default async function RootLayout({
 
   return (
     <html lang="ru" className="h-full antialiased">
-      <body className="text-foreground bg-background min-h-full flex flex-col pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0">
+      <body className="text-foreground flex min-h-full flex-col bg-background pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0">
         <LocalBusinessJsonLd settings={settings} />
-        <SiteHeader
+        <HeaderShell
           siteTitle={settings.siteTitle}
           tagline={settings.tagline}
           whatsappPhone={settings.whatsappPhone}
           categories={categories}
+          socialVk={settings.socialVk}
+          socialInstagram={settings.socialInstagram}
+          socialTelegram={settings.socialTelegram}
         />
         <div className="flex flex-1 flex-col">{children}</div>
-        <SiteFooter settings={settings} />
-        <StickyContactBar
+        <SiteFooter settings={settings} categories={categories} />
+        <StickyContactShell
           whatsappPhone={settings.whatsappPhone}
           phoneTel={settings.phoneTel}
         />

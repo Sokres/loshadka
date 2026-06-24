@@ -39,6 +39,24 @@ export const serviceCategory = defineType({
       type: "image",
       options: { hotspot: true },
     }),
+    defineField({
+      name: "durationLabel",
+      title: "Длительность (подпись)",
+      type: "string",
+      description: 'Например: "от 1 часа"',
+    }),
+    defineField({
+      name: "levelLabel",
+      title: "Уровень (подпись)",
+      type: "string",
+      description: 'Например: "для всех уровней"',
+    }),
+    defineField({
+      name: "isPopular",
+      title: "Популярно",
+      type: "boolean",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: "title", subtitle: "slug.current" },

@@ -43,6 +43,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-footer: var(--footer-bg);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -53,31 +54,31 @@
 }
 
 :root {
-  /* Светлая тема: акцент под фирменный мятный логотип (~hue 168), без терракоты. */
-  --background: oklch(0.993 0.006 155);
-  --foreground: oklch(0.2 0.022 158);
-  --card: oklch(0.997 0.005 155);
-  --card-foreground: oklch(0.2 0.022 158);
-  --popover: oklch(0.997 0.005 155);
-  --popover-foreground: oklch(0.2 0.022 158);
-  --primary: oklch(0.46 0.13 168);
-  --primary-foreground: oklch(0.99 0.01 165);
-  --secondary: oklch(0.965 0.022 155);
-  --secondary-foreground: oklch(0.26 0.035 158);
-  --muted: oklch(0.956 0.018 158);
-  --muted-foreground: oklch(0.52 0.028 155);
-  --accent: oklch(0.94 0.042 165);
-  --accent-foreground: oklch(0.22 0.045 165);
+  --background: oklch(0.985 0.004 145);
+  --foreground: oklch(0.22 0.03 155);
+  --card: oklch(1 0.002 145);
+  --card-foreground: oklch(0.22 0.03 155);
+  --popover: oklch(1 0.002 145);
+  --popover-foreground: oklch(0.22 0.03 155);
+  --primary: oklch(0.32 0.055 155);
+  --primary-foreground: oklch(0.99 0.005 145);
+  --secondary: oklch(0.96 0.012 145);
+  --secondary-foreground: oklch(0.28 0.035 155);
+  --muted: oklch(0.955 0.014 85);
+  --muted-foreground: oklch(0.48 0.025 155);
+  --accent: oklch(0.94 0.025 145);
+  --accent-foreground: oklch(0.24 0.04 155);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.026 158);
-  --input: oklch(0.928 0.02 158);
-  --ring: oklch(0.54 0.12 168);
+  --border: oklch(0.91 0.012 145);
+  --input: oklch(0.93 0.01 145);
+  --ring: oklch(0.38 0.06 155);
+  --footer-bg: oklch(0.28 0.055 155);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0.75rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -131,31 +132,6 @@
   }
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
-    background-image:
-      radial-gradient(
-        ellipse 110% 62% at 50% -10%,
-        oklch(0.93 0.055 168 / 0.28),
-        transparent 54%
-      ),
-      radial-gradient(
-        ellipse 90% 55% at 100% 88%,
-        oklch(0.94 0.04 155 / 0.22),
-        transparent 58%
-      );
-    background-attachment: fixed;
-  }
-  .dark body {
-    background-image:
-      radial-gradient(
-        ellipse 110% 58% at 50% -8%,
-        oklch(0.34 0.08 168 / 0.35),
-        transparent 54%
-      ),
-      radial-gradient(
-        ellipse 88% 50% at 100% 90%,
-        oklch(0.28 0.06 158 / 0.32),
-        transparent 58%
-      );
   }
   h1,
   h2,

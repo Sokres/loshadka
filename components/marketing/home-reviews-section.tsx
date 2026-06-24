@@ -1,110 +1,96 @@
-"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { Star } from "lucide-react";
 
-import { useCallback, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import type { ReviewDTO } from "@/lib/cms/types-and-fallback";
+import { cn } from "@/lib/utils";
 
 import { ScrollReveal } from "@/components/marketing/scroll-reveal";
 
-function ReviewQuoteCard({
-  authorName,
-  quote,
-}: Pick<ReviewDTO, "authorName" | "quote">) {
+function StarRating({ rating }: { rating: number }) {
   return (
-    <Card className="rounded-2xl border-border/70 bg-background/95 shadow-sm ring-1 ring-border/55">
-      <CardHeader className="gap-3">
-        <CardTitle className="text-base font-semibold">{authorName}</CardTitle>
-        <CardDescription className="relative pl-5 text-base leading-relaxed text-foreground/90">
-          <span
-            className="absolute top-0 left-0 translate-y-[-2px] font-heading text-4xl leading-none text-primary/35 selection:bg-transparent"
-            aria-hidden
-          >
-            «
+    <div className="flex gap-0.5" aria-label={`Оценка ${rating} из 5`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <Star
+          key={i}
+          className={cn(
+            "size-4",
+            i < rating ? "fill-amber-400 text-amber-400" : "text-border",
+          )}
+          aria-hidden
+        />
+      ))}
+    </div>
+  );
+}
+
+function ReviewCard({ review }: { review: ReviewDTO }) {
+  const rating = review.rating ?? 5;
+  const initial = review.authorName.trim().charAt(0).toUpperCase();
+
+  return (
+    <article className="flex h-full flex-col rounded-2xl border border-border/70 bg-card p-5 shadow-sm">
+      <div className="flex items-center gap-3">
+        {review.authorPhotoUrl ? (
+          <Image
+            src={review.authorPhotoUrl}
+            alt=""
+            width={44}
+            height={44}
+            className="size-11 rounded-full object-cover"
+          />
+        ) : (
+          <span className="flex size-11 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+            {initial}
           </span>
-          <span>{quote}</span>
-          <span aria-hidden className="text-foreground/55">
-            »
-          </span>
-        </CardDescription>
-      </CardHeader>
-    </Card>
+        )}
+        <div>
+          <p className="font-semibold">{review.authorName}</p>
+          <StarRating rating={rating} />
+        </div>
+      </div>
+      <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground/90">{review.quote}</p>
+      {review.tripPhotoUrl ? (
+        <div className="relative mt-4 aspect-video overflow-hidden rounded-xl bg-muted">
+          <Image
+            src={review.tripPhotoUrl}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 320px"
+          />
+        </div>
+      ) : null}
+    </article>
   );
 }
 
 export function HomeReviewsSection({ reviews }: { reviews: ReviewDTO[] }) {
-  const [index, setIndex] = useState(0);
+  if (!reviews.length) return null;
 
-  const len = reviews.length;
-  const safeIndex = len ? ((index % len) + len) % len : 0;
-
-  const go = useCallback(
-    (delta: number) => {
-      if (!len) return;
-      setIndex((i) => ((i + delta) % len + len) % len);
-    },
-    [len],
-  );
-
-  if (!len) return null;
+  const displayed = reviews.slice(0, 3);
 
   return (
     <>
-      <div className="mt-10 md:hidden">
-        <div className="relative px-12">
-          <ReviewQuoteCard {...reviews[safeIndex]} />
-          <button
-            type="button"
-            aria-label="Предыдущий отзыв"
-            className="absolute top-1/2 left-0 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border/80 bg-background/95 text-foreground shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:hidden"
-            onClick={() => go(-1)}
-          >
-            <ChevronLeft className="size-5" aria-hidden />
-          </button>
-          <button
-            type="button"
-            aria-label="Следующий отзыв"
-            className="absolute top-1/2 right-0 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border/80 bg-background/95 text-foreground shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:hidden"
-            onClick={() => go(1)}
-          >
-            <ChevronRight className="size-5" aria-hidden />
-          </button>
-        </div>
-        <div
-          className="mt-6 flex justify-center gap-2"
-          role="tablist"
-          aria-label="Выбор отзыва"
-        >
-          {reviews.map((r, i) => (
-            <button
-              key={r._id}
-              type="button"
-              role="tab"
-              aria-selected={i === safeIndex}
-              aria-label={`Отзыв ${i + 1} из ${len}`}
-              className={cn(
-                "h-2 rounded-full transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transition-none",
-                i === safeIndex ? "w-8 bg-primary" : "w-2 bg-muted-foreground/35 hover:bg-muted-foreground/55",
-              )}
-              onClick={() => setIndex(i)}
-            />
-          ))}
-        </div>
+      <div className="mt-10 flex flex-col gap-4 md:hidden">
+        {displayed.map((review) => (
+          <ReviewCard key={review._id} review={review} />
+        ))}
       </div>
 
       <div className="mt-10 hidden gap-6 md:grid md:grid-cols-3">
-        {reviews.map((r, i) => (
-          <ScrollReveal key={r._id} delayMs={i * 70}>
-            <ReviewQuoteCard {...r} />
+        {displayed.map((review, i) => (
+          <ScrollReveal key={review._id} delayMs={i * 70}>
+            <ReviewCard review={review} />
           </ScrollReveal>
         ))}
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <Link href="/kontakty" className={buttonVariants({ variant: "outline", size: "lg" })}>
+          Читать больше отзывов
+        </Link>
       </div>
     </>
   );

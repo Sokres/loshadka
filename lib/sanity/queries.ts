@@ -8,9 +8,23 @@ export const siteSettingsQuery = groq`
     phoneTel,
     whatsappPhone,
     address,
+    email,
     geoLat,
     geoLng,
-    defaultMetaDescription
+    defaultMetaDescription,
+    statsYears,
+    statsYearsLabel,
+    statsGuests,
+    statsGuestsLabel,
+    statsRoutes,
+    statsRoutesLabel,
+    statsRating,
+    statsRatingLabel,
+    socialVk,
+    socialInstagram,
+    socialTelegram,
+    promoVideoUrl,
+    "promoVideoPosterUrl": promoVideoPoster.asset->url
   }
 `;
 
@@ -19,7 +33,10 @@ export const categoriesQuery = groq`
     _id,
     title,
     slug,
-    description
+    description,
+    durationLabel,
+    levelLabel,
+    isPopular
   }
 `;
 
@@ -112,7 +129,9 @@ export const reviewsQuery = groq`
     authorName,
     quote,
     publishedAt,
-    rating
+    rating,
+    "authorPhotoUrl": authorPhoto.asset->url,
+    "tripPhotoUrl": tripPhoto.asset->url
   }
 `;
 

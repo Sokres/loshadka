@@ -9,9 +9,23 @@ export type SiteSettingsDTO = {
   phoneTel: string;
   whatsappPhone: string;
   address?: string | null;
+  email?: string | null;
   geoLat?: number | null;
   geoLng?: number | null;
   defaultMetaDescription?: string | null;
+  statsYears?: string | null;
+  statsYearsLabel?: string | null;
+  statsGuests?: string | null;
+  statsGuestsLabel?: string | null;
+  statsRoutes?: string | null;
+  statsRoutesLabel?: string | null;
+  statsRating?: string | null;
+  statsRatingLabel?: string | null;
+  socialVk?: string | null;
+  socialInstagram?: string | null;
+  socialTelegram?: string | null;
+  promoVideoUrl?: string | null;
+  promoVideoPosterUrl?: string | null;
 };
 
 export type ServiceCategoryDTO = {
@@ -19,6 +33,9 @@ export type ServiceCategoryDTO = {
   title: string;
   slug: SanitySlug;
   description?: string | null;
+  durationLabel?: string | null;
+  levelLabel?: string | null;
+  isPopular?: boolean | null;
 };
 
 export type ServiceDTO = {
@@ -47,6 +64,8 @@ export type ReviewDTO = {
   quote: string;
   publishedAt?: string | null;
   rating?: number | null;
+  authorPhotoUrl?: string | null;
+  tripPhotoUrl?: string | null;
 };
 
 function paragraph(text: string, key: string): PortableTextBlock {
@@ -69,12 +88,24 @@ export const FALLBACK_SITE: SiteSettingsDTO = {
   phoneDisplay: "8 (924) 696-58-54",
   phoneTel: "+79246965854",
   whatsappPhone: "79246965854",
+  email: "info@loshadka-kamchatka.ru",
   address:
     "Камчатский край. Точку сбора и маршруты уточняйте при записи — подскажем по телефону или в WhatsApp.",
   geoLat: 53.089737,
   geoLng: 158.391715,
   defaultMetaDescription:
     "Конные прогулки по Камчатке: река Авача, озёра, океан, сезонные туры. Обучение верховой езде, карета, сани, фотосессии, аренда беседки. Турзона «Лошадка».",
+  statsYears: "15+",
+  statsYearsLabel: "лет работы на Камчатке",
+  statsGuests: "2000+",
+  statsGuestsLabel: "счастливых гостей",
+  statsRoutes: "20+",
+  statsRoutesLabel: "маршрутов на любой вкус",
+  statsRating: "4.9",
+  statsRatingLabel: "рейтинг гостей",
+  socialVk: "https://vk.com",
+  socialInstagram: "https://instagram.com",
+  socialTelegram: "https://t.me",
 };
 
 export const FALLBACK_CATEGORIES: ServiceCategoryDTO[] = [
@@ -84,6 +115,9 @@ export const FALLBACK_CATEGORIES: ServiceCategoryDTO[] = [
     slug: { current: "progulki" },
     description:
       "Маршруты для всадников разного уровня — от коротких прогулок до многодневных путешествий.",
+    durationLabel: "от 1 часа",
+    levelLabel: "для всех уровней",
+    isPopular: true,
   },
   {
     _id: "cat-sezonnye",
@@ -91,6 +125,9 @@ export const FALLBACK_CATEGORIES: ServiceCategoryDTO[] = [
     slug: { current: "sezonnye" },
     description:
       "Особые маршруты в определённые сезоны — уточняйте доступность дат заранее.",
+    durationLabel: "от 1 дня",
+    levelLabel: "под ваш уровень",
+    isPopular: false,
   },
   {
     _id: "cat-obuchenie",
@@ -98,6 +135,9 @@ export const FALLBACK_CATEGORIES: ServiceCategoryDTO[] = [
     slug: { current: "obuchenie" },
     description:
       "Школа верховой езды и индивидуальные занятия — спокойный темп и внимание инструкторов.",
+    durationLabel: "от 1 занятия",
+    levelLabel: "для новичков",
+    isPopular: false,
   },
 ];
 

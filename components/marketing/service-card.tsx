@@ -1,16 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { ArrowRight, Clock, Route } from "lucide-react";
+import { ArrowUpRight, Clock, Route } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -19,10 +12,11 @@ type Props = {
   excerpt: string;
   durationHours?: number | null;
   distanceKm?: string | null;
-  /** Локальные фото из `public/images/routes` (обложка + счётчик). */
+  durationLabel?: string | null;
+  levelLabel?: string | null;
+  isPopular?: boolean | null;
   galleryPaths?: readonly string[];
-  /** На главной: крупная плитка bento-сетки. */
-  variant?: "default" | "featured";
+  variant?: "default" | "featured" | "direction";
 };
 
 export function ServiceCard({
@@ -31,62 +25,103 @@ export function ServiceCard({
   excerpt,
   durationHours,
   distanceKm,
+  durationLabel,
+  levelLabel,
+  isPopular,
   galleryPaths,
   variant = "default",
 }: Props) {
-  const featured = variant === "featured";
+  const direction = variant === "direction";
   const coverSrc = galleryPaths?.[0];
-  const extraCount = galleryPaths && galleryPaths.length > 1 ? galleryPaths.length - 1 : 0;
 
-  const cardInner = (
-    <Card
-      className={cn(
-        "h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-0 shadow-sm transition-all duration-300",
-        "hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/8",
-        featured &&
-          "rounded-[15px] border-0 shadow-md ring-0 sm:rounded-[15px] hover:shadow-xl hover:shadow-primary/14",
-      )}
-    >
-        {coverSrc ? (
-          <div
-            className={cn(
-              "relative w-full overflow-hidden bg-muted",
-              featured ? "aspect-5/4 min-h-50 sm:min-h-64" : "aspect-video",
-            )}
-          >
+  if (direction) {
+    return (
+      <Link
+        href={href}
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      >
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          {coverSrc ? (
             <Image
               src={coverSrc}
-              alt={`${title} — фото маршрута`}
+              alt={`${title} — фото`}
               fill
               className="object-cover transition duration-500 group-hover:scale-[1.03]"
-              sizes={
-                featured
-                  ? "(max-width: 1024px) 100vw, 55vw"
-                  : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              }
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
-            {extraCount > 0 ? (
-              <span className="absolute bottom-2 right-2 rounded-full bg-black/55 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
-                +{extraCount} фото
-              </span>
-            ) : null}
-          </div>
-        ) : null}
-        <CardHeader className={cn("gap-2 px-6 pt-6", featured && "gap-3 sm:px-8 sm:pt-8")}>
-          <CardTitle
-            className={cn(
-              "flex items-start justify-between gap-2 leading-snug",
-              featured ? "text-xl sm:text-2xl" : "text-lg",
-            )}
-          >
-            <span className="transition-colors group-hover:text-primary">{title}</span>
-            <ArrowRight className="mt-1 size-4 shrink-0 opacity-40 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
-          </CardTitle>
-          <CardDescription className="line-clamp-3 text-base leading-relaxed">
+          ) : null}
+          {isPopular ? (
+            <Badge className="absolute top-3 left-3 border-0 bg-primary text-primary-foreground">
+              Популярно
+            </Badge>
+          ) : null}
+        </div>
+        <div className="flex flex-1 flex-col p-5">
+          <h3 className="font-heading text-xl font-semibold tracking-tight transition group-hover:text-primary">
+            {title}
+          </h3>
+          <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
             {excerpt}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-2 px-6 pb-6">
+          </p>
+          <div className="mt-4 flex items-end justify-between gap-3">
+            <div className="text-xs text-muted-foreground">
+              {durationLabel ? <p>{durationLabel}</p> : null}
+              {levelLabel ? <p className="mt-0.5">{levelLabel}</p> : null}
+            </div>
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition group-hover:bg-primary/90">
+              <ArrowUpRight className="size-4" aria-hidden />
+            </span>
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  const featured = variant === "featured";
+
+  const cardInner = (
+    <div
+      className={cn(
+        "h-full overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-300",
+        "hover:-translate-y-1 hover:shadow-lg",
+        featured && "shadow-md",
+      )}
+    >
+      {coverSrc ? (
+        <div
+          className={cn(
+            "relative w-full overflow-hidden bg-muted",
+            featured ? "aspect-5/4 min-h-50 sm:min-h-64" : "aspect-video",
+          )}
+        >
+          <Image
+            src={coverSrc}
+            alt={`${title} — фото маршрута`}
+            fill
+            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+            sizes={
+              featured
+                ? "(max-width: 1024px) 100vw, 55vw"
+                : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            }
+          />
+        </div>
+      ) : null}
+      <div className={cn("px-6 pt-6", featured && "sm:px-8 sm:pt-8")}>
+        <h3
+          className={cn(
+            "font-semibold leading-snug",
+            featured ? "text-xl sm:text-2xl" : "text-lg",
+          )}
+        >
+          {title}
+        </h3>
+        <p className="mt-2 line-clamp-3 text-base leading-relaxed text-muted-foreground">
+          {excerpt}
+        </p>
+      </div>
+      {durationHours || distanceKm ? (
+        <div className="flex flex-wrap gap-2 px-6 pb-6 pt-2">
           {durationHours ? (
             <Badge variant="secondary" className="gap-1 font-normal">
               <Clock className="size-3.5" />
@@ -99,24 +134,19 @@ export function ServiceCard({
               {distanceKm}
             </Badge>
           ) : null}
-        </CardContent>
-      </Card>
+        </div>
+      ) : (
+        <div className="px-6 pb-6 pt-4" />
+      )}
+    </div>
   );
 
   return (
     <Link
       href={href}
-      className={cn(
-        "group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-      )}
+      className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      {featured ? (
-        <div className="rounded-2xl bg-linear-to-br from-primary/58 via-accent/48 to-primary/42 p-px shadow-md shadow-primary/14 transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-primary/22">
-          {cardInner}
-        </div>
-      ) : (
-        cardInner
-      )}
+      {cardInner}
     </Link>
   );
 }
